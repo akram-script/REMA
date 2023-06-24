@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+/* eslint-disable @angular-eslint/no-empty-lifecycle-method */
+/* eslint-disable @typescript-eslint/no-empty-function */
+import { Component, Input, OnInit } from '@angular/core';
+import { IPropertyBase } from 'src/app/Model/ipropertybase';
+
 
 @Component({
   selector: 'app-property-card',
@@ -6,15 +10,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./property-card.component.css']
 })
 export class PropertyCardComponent implements OnInit {
+  @Input()
+  property : IPropertyBase   ;
+  @Input()
+  hideIcons : boolean ;
 
-  Property : any = {
-    "Name" : "villa jenna doe",
-    "Type" : "House" ,
-    "price" : 100000,
-
-  }
-
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
 }

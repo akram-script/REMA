@@ -1,30 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { property } from 'src/app/Model/property';
+import { HousingService } from 'src/app/services/housing.service';
 
 @Component({
-  selector: 'app-detail-property',
+  selector: 'app-property-detail',
   templateUrl: './detail-property.component.html',
   styleUrls: ['./detail-property.component.css']
 })
-export class DetailPropertyComponent implements OnInit {
+export class PropertyDetailComponent implements OnInit {
+public propertyId: number;
+property = new property();
 
-  propertyId : number  ;
-
-  constructor(private route : ActivatedRoute , private router : Router) { }
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private housingService: HousingService) { }
 
   ngOnInit() {
-    this.propertyId = Number(this.route.snapshot.paramMap.get('id'));
+    this.propertyId = +this.route.snapshot.params['id'];
 
     this.route.params.subscribe(
       (params) => {
-        this.propertyId = +params['id'] ;
+        this.propertyId = +params['id'];
+        this.housingService.getProperty(this.propertyId).subscribe(property => this.property = property)
+
+          }
+        );
       }
-    ) ;
-  }
-  onSelectNext(){
-    this.propertyId +=1 ;
-    this.router.navigate(['detail-property' , this.propertyId]) ;
+
 
   }
 
-}
+
+

@@ -8,7 +8,6 @@ import { PropertyListComponent } from './property/property-list/property-list.co
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HousingService } from './services/housing.service';
-import { DetailPropertyComponent } from './property/detail-property/detail-property.component';
  import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddPropertyComponent } from './property/add-property/add-property.component';
 import { UserLoginComponent } from './User/user-login/user-login.component';
@@ -21,13 +20,14 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { PropertyDetailComponent } from './property/detail-property/detail-property.component';
 @NgModule({
   declarations: [
     AppComponent,
     PropertyCardComponent,
     PropertyListComponent,
       NavBarComponent,
-      DetailPropertyComponent,
+      PropertyDetailComponent,
       AddPropertyComponent,
       UserLoginComponent,
       UserRegisterComponent,

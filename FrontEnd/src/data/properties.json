@@ -29,7 +29,7 @@
   },
 
   {
-    "Id":2,
+    "ID":2,
 
     "RTM" : true ,
     "SellRent":2,
@@ -58,7 +58,7 @@
     "PostedOn":"01-Jan-2019"
   },
   {
-    "Id":3,
+    "ID":3,
     "SellRent":1,
     "Name":"Gun Hill",
     "PType":"House",
@@ -87,7 +87,7 @@
   },
 
   {
-    "Id":4,
+    "ID":4,
     "SellRent":1,
     "RTM" : true ,
     "Name":"Macro Home",
@@ -115,7 +115,7 @@
     "PostedOn":"01-Jan-2019"
   },
   {
-    "Id":5,
+    "ID":5,
     "SellRent":1,
     "RTM" : true ,
     "Name":"Saint Church Villa",
@@ -144,7 +144,7 @@
   },
 
   {
-    "Id":6,
+    "ID":6,
     "SellRent":1,
     "Name":"",
     "PType":"Duplex",

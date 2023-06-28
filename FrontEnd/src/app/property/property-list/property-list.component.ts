@@ -12,7 +12,12 @@ import { IProperty } from 'src/app/Model/iproperty';
 export class PropertyListComponent implements OnInit {
 
   Properties : Array<IProperty> | undefined = [] ;
-  sellRent : number = 1 ;
+  sellRent : number = 1
+  Today = new Date();
+  City = '';
+  SearchCity = '';
+  SortbyParam = '';
+  SortDirection = 'asc';
   /**
    *
    */
@@ -26,5 +31,21 @@ export class PropertyListComponent implements OnInit {
     this.service.GetHouses(this.sellRent).subscribe(properties => {
       this.Properties = properties ;
       }) ;
+  }
+  onCityFilter() {
+    this.SearchCity = this.City;
+  }
+
+  onCityFilterClear() {
+    this.SearchCity = '';
+    this.City = '';
+  }
+
+  onSortDirection() {
+    if (this.SortDirection === 'desc') {
+      this.SortDirection = 'asc';
+    } else {
+      this.SortDirection = 'desc';
+    }
   }
 }

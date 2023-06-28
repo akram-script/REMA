@@ -6,13 +6,14 @@ import { Injectable } from '@angular/core';
 import { catchError,  of, tap , map, Observable } from 'rxjs';
 import { IProperty } from '../Model/iproperty';
 import { property } from '../Model/property';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn : 'root'
 })
 export class HousingService {
 
-  constructor(private http : HttpClient) { }
+  constructor(private router : Router,private http : HttpClient) { }
 
 
   getProperty(propertyId: number) :Observable<property>{
@@ -21,7 +22,6 @@ export class HousingService {
         const propertiesArray: Array<IProperty> = [];
         const localProps = JSON.parse(localStorage.getItem('newProp'));
         if (localProps) {
-          console.log(localProps);
           this.pushToAllProps(localProps, propertiesArray);
         }
         this.pushToAllProps(data, propertiesArray);
@@ -101,6 +101,7 @@ export class HousingService {
    }
    private handleError(error : Error , errorValue :any){
     console.error(error) ;
+    this.router.navigate(['/']);
     return of(errorValue) ;
    }
 }

@@ -21,8 +21,14 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { PropertyDetailComponent } from './property/detail-property/detail-property.component';
+import { GalleryModule } from 'ng-gallery';
+import { FilterPipe } from './Pipes/filter.pipe';
+import { SortPipe } from './Pipes/sort.pipe';
+
 @NgModule({
   declarations: [
+    SortPipe,
+    FilterPipe,
     AppComponent,
     PropertyCardComponent,
     PropertyListComponent,
@@ -34,6 +40,7 @@ import { PropertyDetailComponent } from './property/detail-property/detail-prope
 
    ],
   imports: [
+    GalleryModule ,
     BsDatepickerModule.forRoot() ,
     ButtonsModule.forRoot(),
     TabsModule,
@@ -44,8 +51,6 @@ import { PropertyDetailComponent } from './property/detail-property/detail-prope
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-
-
   ],
   providers: [ HousingService , UserService , AuthService , AlertifyService],
   bootstrap: [AppComponent]

@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WebApi.Data;
+﻿using Microsoft.AspNetCore.Mvc;
+using WebApi.Data.Repo;
 using WebApi.Models;
 
 namespace WebApi.Controllers
@@ -10,52 +8,46 @@ namespace WebApi.Controllers
     [ApiController]
     public class CityController : ControllerBase
     {
-        private readonly DataContext dc;
+        private readonly ICiityRepository cityRepo;
 
-        public CityController(DataContext dc)
+        public CityController( ICiityRepository cityRepo)
         {
-            this.dc = dc;
+            this.cityRepo = cityRepo;
         }
+        /// <summary>
+        /// get all cities from db
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public async  Task<IActionResult> GetCities()
+        public async Task<IActionResult> GetCities()
         {
-            var Cities = await dc.Cities.ToListAsync();
-            return  Ok(Cities);
+            var Cities = await cityRepo.GetCitiesAsync();
+            return StatusCode(201);
         }
-       
-        [HttpPost("add")]
-        [HttpPost("add/{CityName}")]
-        public async Task<IActionResult> AddCity(string CityName)
-        {
-            var city = new City()
-            {
-                Name = CityName,
-            };
-           await dc.Cities.AddAsync(city);
-           await dc.SaveChangesAsync();
-            return Ok(city);
-        }
+        /// <summary>
+        /// add a city to the db 
+        /// </summary>
+        /// <param name="city"></param>
+        /// <returns></returns>
         [HttpPost("post")]
         public async Task<IActionResult> AddCity(City city)
         {
-            
-            await dc.Cities.AddAsync(city);
-            await dc.SaveChangesAsync();
-            return Ok(city);
+            cityRepo.AddCity(city);
+            await cityRepo.SaveAsync();
+            return StatusCode(201);
         }
+        /// <summary>
+        /// deletes city by id 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteCity(int id)
         {
-            var city = await dc.Cities.FindAsync(id);
-
-            if (city != null)
-            {
-                dc.Cities.Remove(city);
-                await dc.SaveChangesAsync();
-            }
-            return Ok(id);
+            cityRepo.DeleteCity(id);
+            await cityRepo.SaveAsync();
+            return StatusCode(201);
         }
-        [HttpGet("{id}")]
-        public string Get(int id) { return "Atlanta"; }
+       
     }
 }

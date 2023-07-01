@@ -1,6 +1,7 @@
 using WebApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using WebApi.Data.Repo;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -19,7 +20,8 @@ IConfigurationRoot Configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json")
             .Build();
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+//repo injection
+builder.Services.AddScoped<ICiityRepository, CityRepository>();
 
 var app = builder.Build();
 

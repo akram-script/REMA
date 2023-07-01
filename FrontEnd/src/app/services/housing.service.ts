@@ -15,6 +15,9 @@ export class HousingService {
 
   constructor(private router : Router,private http : HttpClient) { }
 
+getAllCities() :Observable<string[]>{
+  return this.http.get<string[]>('http://localhost:59504/api/City');
+}
 
   getProperty(propertyId: number) :Observable<property>{
     return this.http.get('data/properties.json').pipe(

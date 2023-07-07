@@ -1,13 +1,13 @@
 ﻿using WebApi.Models;
 
-namespace WebApi.Data.Repo
+namespace WebApi.Interfaces
 {
-    public interface ICiityRepository
+    public interface ICityRepository
     {
         Task<IEnumerable<City>> GetCitiesAsync();
 
         void AddCity(City city);
         void DeleteCity(int cityId);
-        Task<bool> SaveAsync();
+        Task<City> FindCity(int cityId);
     }
 }

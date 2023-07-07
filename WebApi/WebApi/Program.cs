@@ -1,7 +1,15 @@
-using WebApi.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using WebApi.Data.Repo;
+using WebApi.Data;
+using WebApi.Interfaces;
+using AutoMapper;
+using WebApi.Helper;
+using System.Net;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Builder;
+using WebApi.Extentions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -21,20 +29,38 @@ IConfigurationRoot Configuration = new ConfigurationBuilder()
             .Build();
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 //repo injection
-builder.Services.AddScoped<ICiityRepository, CityRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+//adding automapper
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+//newtonsoft
+builder.Services.AddControllers().AddNewtonsoftJson();
+//authentication 
+var secretkey = Configuration.GetSection("AppSettings:key").Value;
+var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretkey));
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(o =>
+                {
+                    o.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        IssuerSigningKey = key,
+                    };
+                });
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.ConfigureExceptionHandler();
+
+
 //app cors
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors("corsapp");
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WebApi.Interfaces;
 using WebApi.Models;
 
 namespace WebApi.Data.Repo
 {
-    public class CityRepository : ICiityRepository
+    public class CityRepository : ICityRepository
     {
         private readonly DataContext dc;
 
@@ -26,15 +27,17 @@ namespace WebApi.Data.Repo
             }
         }
 
+        public async Task<City> FindCity(int cityId)
+        {
+           return await dc.Cities.FindAsync(cityId);
+        }
+
         public async Task<IEnumerable<City>> GetCitiesAsync()
         {
             return await dc.Cities.ToListAsync();
           
         }
 
-        public async Task<bool> SaveAsync()
-        {
-            return await dc.SaveChangesAsync() > 0;
-        }
+      
     }
 }

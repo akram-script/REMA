@@ -1,15 +1,12 @@
-using Microsoft.EntityFrameworkCore;
-using WebApi.Data;
-using WebApi.Interfaces;
-using AutoMapper;
-using WebApi.Helper;
-using System.Net;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Builder;
-using WebApi.Extentions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using WebApi.Data;
+using WebApi.Extentions;
+using WebApi.Helper;
+using WebApi.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -35,8 +32,8 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 //newtonsoft
 builder.Services.AddControllers().AddNewtonsoftJson();
 //authentication 
-var secretkey = Configuration.GetSection("AppSettings:key").Value;
-var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretkey));
+var secretKey = Environment.GetEnvironmentVariable("ASPNETCORE_AppSettings__Key");
+var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(o =>
                 {

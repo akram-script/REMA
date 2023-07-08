@@ -23,7 +23,7 @@ namespace WebApi.Controllers
         /// get all cities from db
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("cities")]
         [AllowAnonymous]
         public async Task<IActionResult> GetCities()
         {

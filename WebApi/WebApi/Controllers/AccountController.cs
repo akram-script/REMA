@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -14,7 +15,7 @@ namespace WebApi.Controllers
         private readonly IUnitOfWork uow;
         private readonly IConfiguration config;
 
-        public AccountController(IUnitOfWork uow , IConfiguration config)
+        public AccountController(IUnitOfWork uow, IConfiguration config)
         {
             this.uow = uow;
             this.config = config;
@@ -22,7 +23,7 @@ namespace WebApi.Controllers
         [HttpPost("login")]
         public async Task<ActionResult> Login(LoginReqDto loginReqDto)
         {
-            var user =  await uow.UserRepository.Authenticate(loginReqDto.UserName,loginReqDto.Password);
+            var user = await uow.UserRepository.Authenticate(loginReqDto.UserName, loginReqDto.Password);
             if (user == null)
             {
                 return Unauthorized();
@@ -33,13 +34,22 @@ namespace WebApi.Controllers
                 UserName = user.UserName,
                 Token = CreateJWT(user)
 
-            }); 
+            });
 
+        }
+        [HttpPost("register")]
+        public async Task<ActionResult> Register(LoginReqDto loginReqDto)
+        {
+            if(await uow.UserRepository.UserAlreadyexists(loginReqDto.UserName))
+                return BadRequest("User Already Exists");
+            uow.UserRepository.Register(loginReqDto.UserName,loginReqDto.Password);
+            await uow.SaveAsync();
+            return StatusCode(201);
         }
 
         private string CreateJWT(User user)
         {
-            var secretKey = config.GetSection("AppSettings:key").Value;
+            var secretKey = Environment.GetEnvironmentVariable("ASPNETCORE_AppSettings__Key");
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var claims = new Claim[]
             {

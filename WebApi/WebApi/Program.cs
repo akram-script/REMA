@@ -55,6 +55,8 @@ app.ConfigureExceptionHandler();
 //app cors
 app.UseHttpsRedirection();
 app.UseRouting();
+app.UseHsts();
+app.UseHttpsRedirection();
 app.UseCors("corsapp");
 
 app.UseAuthentication();

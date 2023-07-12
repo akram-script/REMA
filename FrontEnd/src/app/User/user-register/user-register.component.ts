@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from 'src/app/Model/user';
+import { UserForRegister } from 'src/app/Model/user';
 import { AlertifyService } from 'src/app/services/alertify.service';
-import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-user-register',
   templateUrl: './user-register.component.html',
@@ -11,14 +11,14 @@ import { UserService } from 'src/app/services/user.service';
 export class UserRegisterComponent implements OnInit {
 
   registrationForm : FormGroup ;
-  user : User ;
+  user : UserForRegister ;
   userSubmitted : boolean  ;
   /**
    *
    */
   constructor(private alertify : AlertifyService ,
               private fb : FormBuilder ,
-              private userService : UserService) {}
+              private authService : AuthService) {}
 
   ngOnInit(): void {
     // this.registrationForm = new FormGroup(
@@ -35,7 +35,7 @@ export class UserRegisterComponent implements OnInit {
       this.registrationForm.controls['email'].setValue('azaekaz@email');
       this.registrationForm.controls['password'].setValue('akram123456');
       this.registrationForm.controls['confirmPassword'].setValue('akram123456');
-      this.registrationForm.controls['mobile'].setValue('0678421257');
+      this.registrationForm.controls['mobile'].setValue('06000000');
 
   }
   createRegistrationForm(){
@@ -57,17 +57,18 @@ export class UserRegisterComponent implements OnInit {
   onSubmit(){
     this.userSubmitted = true ;
     if(this.registrationForm.valid){
-    //this.user = Object.assign(this.user,this.registrationForm.value);
-    this.userService.adduser(this.userData());
-    this.registrationForm.reset();
-    this.userSubmitted = false ;
-    this.alertify.success("Successfully registered");
-    }else{
-      this.alertify.error("kindly , provide the required fields");
-    }
-
+    console.log(this.userData());
+    this.authService.registerUser(this.userData()).subscribe(()=>{
+      this.registrationForm.reset();
+      this.userSubmitted = false ;
+      this.alertify.success("Successfully registered");
+    },error => {
+      console.log(error.error);
+      this.alertify.error(error.error);
+    });
+   }
   }
-  userData () : User {
+  userData () : UserForRegister {
     return this.user = {
       userName : this.userName.value ,
       password : this.password.value ,

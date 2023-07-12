@@ -26,7 +26,7 @@ namespace WebApi.Controllers
             var user = await uow.UserRepository.Authenticate(loginReqDto.UserName, loginReqDto.Password);
             if (user == null)
             {
-                return Unauthorized();
+                return Unauthorized("Invalid User ID or Password");
             }
 
             return Ok(new LoginResDto()
@@ -42,7 +42,7 @@ namespace WebApi.Controllers
         {
             if(await uow.UserRepository.UserAlreadyexists(loginReqDto.UserName))
                 return BadRequest("User Already Exists");
-            uow.UserRepository.Register(loginReqDto.UserName,loginReqDto.Password);
+            uow.UserRepository.Register(loginReqDto);
             await uow.SaveAsync();
             return StatusCode(201);
         }

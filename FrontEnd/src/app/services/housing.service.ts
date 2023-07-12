@@ -7,6 +7,7 @@ import { catchError,  of, tap , map, Observable } from 'rxjs';
 import { IProperty } from '../Model/iproperty';
 import { property } from '../Model/property';
 import { Router } from '@angular/router';
+import { environment } from 'src/enviroments/enviroment';
 
 @Injectable({
   providedIn : 'root'
@@ -15,8 +16,11 @@ export class HousingService {
 
   constructor(private router : Router,private http : HttpClient) { }
 
+  apiUrl = environment.apiUrl ;
+
 getAllCities() :Observable<string[]>{
-  return this.http.get<string[]>('http://localhost:59504/api/City');
+  console.log(this.apiUrl);
+  return this.http.get<string[]>(this.apiUrl+'/City/Cities');
 }
 
   getProperty(propertyId: number) :Observable<property>{

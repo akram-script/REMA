@@ -361,3 +361,26 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+WebApi/WebApi/wwwroot/3rdpartylicenses.txt
+WebApi/WebApi/wwwroot/favicon.ico
+WebApi/WebApi/wwwroot/index.html
+WebApi/WebApi/wwwroot/main.59a36a55b5850d35.js
+WebApi/WebApi/wwwroot/polyfills.ecb2eebfd1ed17d9.js
+WebApi/WebApi/wwwroot/runtime.723604ccfdfd86bc.js
+WebApi/WebApi/wwwroot/styles.32ec84fd01b44c84.css
+WebApi/WebApi/wwwroot/assets/forms.css
+WebApi/WebApi/wwwroot/assets/tabs.css
+WebApi/WebApi/wwwroot/assets/images/azezae.jpg
+WebApi/WebApi/wwwroot/assets/images/house-img.png
+WebApi/WebApi/wwwroot/assets/images/inside-1.jpg
+WebApi/WebApi/wwwroot/assets/images/inside-2.jpg
+WebApi/WebApi/wwwroot/assets/images/inside-3.jpg
+WebApi/WebApi/wwwroot/assets/images/inside-4.jpg
+WebApi/WebApi/wwwroot/assets/images/inside-5.jpg
+WebApi/WebApi/wwwroot/assets/images/prop-1.jpg
+WebApi/WebApi/wwwroot/assets/images/prop-2.jpg
+WebApi/WebApi/wwwroot/assets/images/prop-3.jpg
+WebApi/WebApi/wwwroot/assets/images/prop-4.jpg
+WebApi/WebApi/wwwroot/assets/images/prop-5.jpg
+WebApi/WebApi/wwwroot/assets/images/types-of-houses-hero.jpeg
+WebApi/WebApi/wwwroot/data/properties.json

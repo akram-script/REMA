@@ -24,7 +24,15 @@ IConfigurationRoot Configuration = new ConfigurationBuilder()
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
             .AddJsonFile("appsettings.json")
             .Build();
-builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+var Dbuilder = new SqlConnectionStringBuilder(
+                Configuration.GetConnectionString("DefaultConnection"));
+
+Dbuilder.Password = Environment.GetEnvironmentVariable("REMADBpass");
+
+var connectionString = Dbuilder.ConnectionString;
+
+builder.Services.AddDbContext<DataContext>(options =>
+options.UseSqlServer(connectionString));
 //repo injection
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 //adding automapper
@@ -51,7 +59,6 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 app.ConfigureExceptionHandler();
 
-
 //app cors
 app.UseHttpsRedirection();
 app.UseRouting();
@@ -62,6 +69,9 @@ app.UseCors("corsapp");
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 app.MapControllers();
 

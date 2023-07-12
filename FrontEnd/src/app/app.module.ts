@@ -12,7 +12,6 @@ import { HousingService } from './services/housing.service';
 import { AddPropertyComponent } from './property/add-property/add-property.component';
 import { UserLoginComponent } from './User/user-login/user-login.component';
 import { UserRegisterComponent } from './User/user-register/user-register.component';
-import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
 import { AlertifyService } from './services/alertify.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -52,7 +51,7 @@ import { SortPipe } from './Pipes/sort.pipe';
     ReactiveFormsModule,
     AppRoutingModule,
   ],
-  providers: [ HousingService , UserService , AuthService , AlertifyService],
+  providers: [ HousingService  , AuthService , AlertifyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

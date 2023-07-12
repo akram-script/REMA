@@ -10,5 +10,8 @@ namespace WebApi.Models
         [Required]
         public Byte[] Password { get; set; }
         public Byte[] PasswordKey { get; set; }
+        public string Email { get; set; }
+        public string Mobile { get; set; }
+
     }
 }

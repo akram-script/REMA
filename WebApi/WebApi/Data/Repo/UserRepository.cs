@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Unicode;
+using WebApi.Dtos;
 using WebApi.Interfaces;
 using WebApi.Models;
 
@@ -36,19 +37,21 @@ namespace WebApi.Data.Repo
             return Passwordhash.SequenceEqual(password);
         }
 
-        public void Register(string username, string password)
+        public void Register(LoginReqDto loginReqDto)
         {
             byte[] Passwordhash, PasswordKey; 
             using (var hmac = new  HMACSHA512())
             {
                 PasswordKey = hmac.Key;
-                Passwordhash = hmac.ComputeHash(System  .Text.Encoding.UTF8.GetBytes(password));
+                Passwordhash = hmac.ComputeHash(System  .Text.Encoding.UTF8.GetBytes(loginReqDto.Password));
             }
             var user = new User()
             {
-                UserName = username,
+                UserName = loginReqDto.UserName,
                 Password = Passwordhash,
-                PasswordKey = PasswordKey
+                PasswordKey = PasswordKey,
+                Email = loginReqDto.Email,
+                Mobile = loginReqDto.Mobile,
             };
             dc.Users.Add(user);
         }

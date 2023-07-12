@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/d92b20ae-445e-4040-bcad-c69f05c3a7d4/resourceGroups/rema/providers/Microsoft.Web/sites/RealEstateMa",
+    "appService.deploySubpath": "WebApi\\WebApi\\bin\\release\\net6.0\\publish\\wwwroot"
+}

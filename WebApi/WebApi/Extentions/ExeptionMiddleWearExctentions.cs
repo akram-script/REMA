@@ -14,6 +14,7 @@ namespace WebApi.Extentions
             }
             else
             {
+                
                 app.UseExceptionHandler(
                 options =>
                 {

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http'
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
 
 import { AppComponent } from './app.component';
 import { PropertyCardComponent } from './property/property-card/property-card.component';
@@ -23,6 +23,7 @@ import { PropertyDetailComponent } from './property/detail-property/detail-prope
 import { GalleryModule } from 'ng-gallery';
 import { FilterPipe } from './Pipes/filter.pipe';
 import { SortPipe } from './Pipes/sort.pipe';
+import { HttpErrorInterceptorService } from './services/httperror-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,12 @@ import { SortPipe } from './Pipes/sort.pipe';
     ReactiveFormsModule,
     AppRoutingModule,
   ],
-  providers: [ HousingService  , AuthService , AlertifyService],
+  providers: [ {
+    provide : HTTP_INTERCEPTORS ,
+    useClass : HttpErrorInterceptorService,
+    multi : true
+  },
+     HousingService  , AuthService , AlertifyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

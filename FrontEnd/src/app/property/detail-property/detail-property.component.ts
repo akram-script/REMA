@@ -35,7 +35,7 @@ images: GalleryItem[];
         this.property = data['pdr'];
       }
     );
-
+    this.property.age = this.housingService.getPropertyAge(this.property.estPossessionOn);
 
   }
 

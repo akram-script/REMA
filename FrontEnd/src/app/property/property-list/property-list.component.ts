@@ -3,7 +3,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HousingService } from 'src/app/services/housing.service';
 import { ActivatedRoute } from '@angular/router';
-import { IProperty } from 'src/app/Model/iproperty';
+import { property } from 'src/app/Model/property';
 @Component({
   selector: 'app-property-list',
   templateUrl: './property-list.component.html',
@@ -11,7 +11,7 @@ import { IProperty } from 'src/app/Model/iproperty';
 })
 export class PropertyListComponent implements OnInit {
 
-  Properties : Array<IProperty> | undefined = [] ;
+  Properties : Array<property> | undefined = [] ;
   sellRent : number = 1
   Today = new Date();
   City = '';

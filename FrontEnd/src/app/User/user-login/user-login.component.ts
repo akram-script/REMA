@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {  NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserForRegister, UserForLogin } from 'src/app/Model/user';
+import {  UserForLogin } from 'src/app/Model/user';
 import { AlertifyService } from 'src/app/services/alertify.service';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -35,9 +35,6 @@ export class UserLoginComponent implements OnInit{
    localStorage.setItem('userName',user.userName)
    this.alertify.success('login successful') ;
    this.router.navigate(['/']) ;
-  },error=> {
-    console.log(error),
-    this.alertify.error(error.error);
   }
   );
   // if(token){

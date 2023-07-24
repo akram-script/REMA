@@ -24,20 +24,7 @@ getAllCities() :Observable<string[]>{
 }
 
   getProperty(propertyId: number) :Observable<property>{
-    return this.http.get('data/properties.json').pipe(
-      map(data => {
-        const propertiesArray: Array<IProperty> = [];
-        const localProps = JSON.parse(localStorage.getItem('newProp'));
-        if (localProps) {
-          this.pushToAllProps(localProps, propertiesArray);
-        }
-        this.pushToAllProps(data, propertiesArray);
-        const property = propertiesArray.find(property => property.ID === propertyId);
-        return property;
-      }),
-      tap(response => this.log(response)),
-      catchError(error => this.handleError(error, undefined))
-    );
+    return this.http.get<property>(this.apiUrl + '/property/detail/'+propertyId.toString());
   }
 
 
@@ -61,21 +48,8 @@ getAllCities() :Observable<string[]>{
   }
 
 
-  GetHouses(sellRent? : number) : Observable<IProperty[] | undefined> {
-    return this.http.get('data/properties.json').pipe(
-      map( data => {
-            const propertiesArray : Array<IProperty> = [] ;
-            const localProps = JSON.parse(localStorage.getItem('newProp'));
-            if(localProps) {
-              console.log(localProps);
-              this.pushToProps(localProps, sellRent, propertiesArray);
-            }
-            this.pushToProps(data, sellRent, propertiesArray);
-            return propertiesArray ;
-      }) ,
-      tap((Response) => this.log(Response)) ,
-      catchError((error)=> this.handleError(error , undefined))
-    ) ;
+  GetHouses(sellRent? : number) : Observable<property[] | undefined> {
+    return this.http.get<property[]>(this.apiUrl + '/property/list/'+sellRent.toString());
   }
   private pushToProps(localProps: any, sellRent: number, propertiesArray: IProperty[]) {
     for (const id in localProps) {
@@ -111,4 +85,30 @@ getAllCities() :Observable<string[]>{
     this.router.navigate(['/']);
     return of(errorValue) ;
    }
+
+   getPropertyAge(dateofEstablishment: Date): string
+    {
+        const today = new Date();
+        const estDate = new Date(dateofEstablishment);
+        let age = today.getFullYear() - estDate.getFullYear();
+        const m = today.getMonth() - estDate.getMonth();
+
+        // Current month smaller than establishment month or
+        // Same month but current date smaller than establishment date
+        if (m < 0 || (m === 0 && today.getDate() < estDate.getDate())) {
+            age --;
+        }
+
+        // Establshment date is future date
+        if(today < estDate) {
+            return '0';
+        }
+
+        // Age is less than a year
+        if(age === 0) {
+            return 'Less than a year';
+        }
+
+        return age.toString();
+    }
 }

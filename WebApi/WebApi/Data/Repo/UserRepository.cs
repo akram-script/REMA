@@ -19,7 +19,7 @@ namespace WebApi.Data.Repo
         }
         public async Task<User> Authenticate(string username, string Passwordtext)
         {
-            var user =  await dc.Users.FirstOrDefaultAsync(x => x.UserName == username);
+            var user =  await dc.Users.FirstOrDefaultAsync(x => x.Username == username);
 
             if (user == null || user.PasswordKey == null) 
                 return null;
@@ -47,7 +47,7 @@ namespace WebApi.Data.Repo
             }
             var user = new User()
             {
-                UserName = loginReqDto.UserName,
+                Username = loginReqDto.UserName,
                 Password = Passwordhash,
                 PasswordKey = PasswordKey,
                 Email = loginReqDto.Email,
@@ -58,7 +58,7 @@ namespace WebApi.Data.Repo
 
         public async Task<bool> UserAlreadyexists(string username)
         {
-           return await dc.Users.AnyAsync(x => x.UserName == username);
+           return await dc.Users.AnyAsync(x => x.Username == username);
         }
     }
 }

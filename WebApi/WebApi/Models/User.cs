@@ -2,14 +2,14 @@
 
 namespace WebApi.Models
 {
-    public class User
+    public class User : BaseEntity
     {
-        public int Id { get; set; }
         [Required]
-        public string UserName { get; set; }
+        public string Username { get; set; }
         [Required]
-        public Byte[] Password { get; set; }
-        public Byte[] PasswordKey { get; set; }
+        public byte[] Password { get; set; }
+
+        public byte[] PasswordKey { get; set; }
         public string Email { get; set; }
         public string Mobile { get; set; }
 

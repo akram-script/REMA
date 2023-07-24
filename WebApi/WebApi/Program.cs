@@ -53,6 +53,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                         IssuerSigningKey = key,
                     };
                 });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(
+        name: "AllowOrigin",
+        builder => {
+            builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+        });
+});
 
 var app = builder.Build();
 
@@ -63,8 +73,8 @@ app.ConfigureExceptionHandler();
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseHsts();
-app.UseHttpsRedirection();
-app.UseCors("corsapp");
+app.UseHttpsRedirection(); 
+app.UseCors("AllowOrigin");
 
 app.UseAuthentication();
 

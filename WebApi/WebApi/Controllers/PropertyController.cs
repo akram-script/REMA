@@ -35,6 +35,19 @@ namespace WebApi.Controllers
             var propertyDTO = mapper.Map<PropertyDetailDto>(property);
             return Ok(propertyDTO);
         }
+        //property/add
+        [HttpPost("add")]
+        [Authorize]
+        public async Task<IActionResult> AddProperty(PropertyDto propertyDto)
+        {
+            var property = mapper.Map<Property>(propertyDto);
+            var userId = GetUserId();
+            property.PostedBy = userId;
+            property.LastUpdatedBy = userId;
+            uow.PropertyRepository.AddProperty(property);
+            await uow.SaveAsync();
+            return StatusCode(201);
+        }
 
     }
 }

@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-prototype-builtins */
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError,  of, tap , map, Observable } from 'rxjs';
 import { IProperty } from '../Model/iproperty';
 import { property } from '../Model/property';
 import { Router } from '@angular/router';
 import { environment } from 'src/enviroments/enviroment';
+import { Ikeyvaluepair } from '../Model/Ikeyvaluepair';
 
 @Injectable({
   providedIn : 'root'
@@ -26,25 +27,21 @@ getAllCities() :Observable<string[]>{
   getProperty(propertyId: number) :Observable<property>{
     return this.http.get<property>(this.apiUrl + '/property/detail/'+propertyId.toString());
   }
+  getPropertyTypes() :Observable<Ikeyvaluepair[]>{
+    return this.http.get<Ikeyvaluepair[]>(this.apiUrl + '/PropertyType/list');
+  }
+  getFurnishingTypes() :Observable<Ikeyvaluepair[]>{
+    return this.http.get<Ikeyvaluepair[]>(this.apiUrl + '/FurnishingType/list');
+  }
 
 
   addProperty(property: property) {
-    let newProp = [property];
-
-    const storedProp = localStorage.getItem('newProp');
-    if (storedProp) {
-      try {
-        const parsedProp = JSON.parse(storedProp);
-        if (Array.isArray(parsedProp)) {
-          newProp = [property, ...parsedProp];
-        } else {
-          newProp = [property, parsedProp];
-        }
-      } catch (error) {
-        console.error('Error parsing storedProp:', error);
-      }
-    }
-    localStorage.setItem('newProp', JSON.stringify(newProp));
+      const httpOptions = {
+        headers: new HttpHeaders({
+            Authorization: 'Bearer '+ localStorage.getItem('token')
+        })
+    };
+    return this.http.post(this.apiUrl + '/property/add', property, httpOptions);
   }
 
 

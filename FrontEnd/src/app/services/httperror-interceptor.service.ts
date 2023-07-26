@@ -55,8 +55,17 @@ retryRequest(error: Observable<unknown>, retryCount: number): Observable<unknown
         errorMessage = error.error.message;
     } else {
         // server side error
-        if (error.status!==0) {
-            errorMessage = error.error.errorMessage;
+        if(error.status===401)
+        {
+            return error.statusText;
+        }
+
+        if (error.error.errorMessage && error.status!==0) {
+            {errorMessage = error.error.errorMessage;}
+        }
+
+        if (!error.error.errorMessage && error.error && error.status!==0) {
+            {errorMessage = error.error;}
         }
     }
     return errorMessage;

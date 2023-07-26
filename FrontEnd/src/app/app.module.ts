@@ -24,6 +24,7 @@ import { GalleryModule } from 'ng-gallery';
 import { FilterPipe } from './Pipes/filter.pipe';
 import { SortPipe } from './Pipes/sort.pipe';
 import { HttpErrorInterceptorService } from './services/httperror-interceptor.service';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { HttpErrorInterceptorService } from './services/httperror-interceptor.se
     useClass : HttpErrorInterceptorService,
     multi : true
   },
+    DatePipe,
      HousingService  , AuthService , AlertifyService],
   bootstrap: [AppComponent]
 })

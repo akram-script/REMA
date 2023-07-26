@@ -20,7 +20,7 @@ namespace WebApi.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> GetFurnishingTypes()
         {
-            var furnishingTypes = await uow.FurnishingTypeRepository.GetFurnishingTypesAsync();
+            var furnishingTypes = await  uow.FurnishingTypeRepository.GetFurnishingTypesAsync();
             var furnishingTypesListDto = mapper.Map<IEnumerable<KeyValuePairDto>>(furnishingTypes);
             return Ok(furnishingTypesListDto);
         }

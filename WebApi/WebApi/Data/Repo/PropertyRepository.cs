@@ -48,7 +48,6 @@ namespace WebApi.Data.Repo
             .Include(p => p.Photos)
             .Where(p => p.Id == id)
             .FirstOrDefaultAsync();
-
             return properties;
         }
 

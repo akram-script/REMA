@@ -1,3 +1,4 @@
+import { Photo } from "./Photo";
 import { IPropertyBase } from "./ipropertybase";
 
 export class property implements IPropertyBase{
@@ -27,5 +28,6 @@ export class property implements IPropertyBase{
   estPossessionOn?: Date;
   image?: string;
   description?: string;
-  totalFloors? : number
+  totalFloors? : number ;
+  photos?: Photo[];
 }

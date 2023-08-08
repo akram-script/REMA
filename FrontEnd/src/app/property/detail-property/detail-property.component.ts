@@ -14,30 +14,42 @@ public propertyId: number;
 property = new property();
 
 images: GalleryItem[];
+public mainPhotoUrl: string = null;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private housingService: HousingService) { }
 
   ngOnInit() {
-    this.images = [
-      new ImageItem({ src: 'assets/images/inside-1.jpg', thumb: 'assets/images/inside-1.jpg' }),
-      new ImageItem({ src: 'assets/images/inside-2.jpg', thumb: 'assets/images/inside-2.jpg' }),
-      new ImageItem({ src: 'assets/images/inside-3.jpg', thumb: 'assets/images/inside-3.jpg' }),
-      new ImageItem({ src: 'assets/images/inside-4.jpg', thumb: 'assets/images/inside-4.jpg' }),
-      new ImageItem({ src: 'assets/images/inside-5.jpg', thumb: 'assets/images/inside-5.jpg' }),
-      // ... more items
-    ];
-
     this.propertyId = +this.route.snapshot.params['id'];
     this.route.data.subscribe(
       (data: property) => {
         this.property = data['pdr'];
+        console.log(this.property.photos);
       }
     );
     this.property.age = this.housingService.getPropertyAge(this.property.estPossessionOn);
+    this.images = this.getPropertyPhotos();
 
   }
+  changePrimaryPhoto(mainPhotoUrl: string) {
+    this.mainPhotoUrl = mainPhotoUrl;
+}
+
+  getPropertyPhotos(): GalleryItem[] {
+    const photoUrls: GalleryItem[] = [];
+    for (const photo of this.property.photos) {
+        if(photo.isPrimary)
+        {
+            this.mainPhotoUrl = photo.imageUrl;
+        }
+        else{
+            photoUrls.push(
+              new ImageItem({ src: photo.imageUrl, thumb: photo.imageUrl }),
+            );}
+        }
+    return photoUrls;
+}
 
 
 }

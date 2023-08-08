@@ -7,6 +7,7 @@ using WebApi.Data;
 using WebApi.Extentions;
 using WebApi.Helper;
 using WebApi.Interfaces;
+using WebApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -35,6 +36,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 options.UseSqlServer(connectionString));
 //repo injection
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IPhotoService,PhotoService>();
 //adding automapper
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 //newtonsoft

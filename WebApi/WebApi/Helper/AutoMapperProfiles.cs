@@ -9,8 +9,13 @@ namespace WebApi.Helper
         public AutoMapperProfiles()
         {
             CreateMap<City,CityDto>().ReverseMap();
+
             CreateMap<City, CityUpdateDto>().ReverseMap();
+
             CreateMap<Property, PropertyDto>().ReverseMap();
+
+            CreateMap<Photo, PhotoDto>().ReverseMap();
+
             CreateMap<Property, PropertyListDto>()
              .ForMember(d => d.City, opt => opt.MapFrom(src => src.City.Name))
              .ForMember(d => d.Country, opt => opt.MapFrom(src => src.City.Country))

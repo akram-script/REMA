@@ -7,7 +7,6 @@ import { AlertifyService } from 'src/app/services/alertify.service';
 import { IPropertyBase } from 'src/app/Model/ipropertybase';
 import { property } from 'src/app/Model/property';
 import { Ikeyvaluepair } from 'src/app/Model/Ikeyvaluepair';
-import { DatePipe } from '@angular/common';
 
 
 @Component({

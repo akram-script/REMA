@@ -24,6 +24,7 @@ namespace WebApi.Data.Repo
                                       .Include(p=> p.PropertyType)
                                       .Include(p=>p.City)
                                       .Include(p=>p.FurnishingType)
+                                      .Include(p=>p.Photos)
                                       .ToListAsync();
 
             return properties;

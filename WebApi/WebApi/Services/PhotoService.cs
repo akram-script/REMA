@@ -18,9 +18,13 @@ namespace WebApi.Services
 
             cloudinary = new Cloudinary(account);
         }
-        public Task<DeletionResult> DeletePhotoAsync(string publicId)
+        public async Task<DeletionResult> DeletePhotoAsync(string publicId)
         {
-            throw new NotImplementedException();
+            var deleteParams = new DeletionParams(publicId);
+
+            var result = await cloudinary.DestroyAsync(deleteParams);
+
+            return result;
         }
 
         public async Task<ImageUploadResult> UploadPhotoAsync(IFormFile photo)

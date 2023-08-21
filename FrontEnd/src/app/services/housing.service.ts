@@ -95,12 +95,10 @@ getAllCities() :Observable<string[]>{
         if (m < 0 || (m === 0 && today.getDate() < estDate.getDate())) {
             age --;
         }
-
         // Establshment date is future date
         if(today < estDate) {
             return '0';
         }
-
         // Age is less than a year
         if(age === 0) {
             return 'Less than a year';
@@ -108,4 +106,24 @@ getAllCities() :Observable<string[]>{
 
         return age.toString();
     }
+    setPrimaryPhoto(propertyId: number, propertyPhotoId: string) {
+      const httpOptions = {
+          headers: new HttpHeaders({
+              Authorization: 'Bearer '+ localStorage.getItem('token')
+          })
+      };
+      return this.http.post(this.apiUrl + '/property/set-primary-photo/'+String(propertyId)
+          +'/'+propertyPhotoId, {}, httpOptions);
+  }
+
+  deletePhoto(propertyId: number, propertyPhotoId: string) {
+      const httpOptions = {
+          headers: new HttpHeaders({
+              Authorization: 'Bearer '+ localStorage.getItem('token')
+          })
+      };
+      return this.http.delete(this.apiUrl + '/property/delete-photo/'
+          +String(propertyId)+'/'+propertyPhotoId, httpOptions);
+  }
+
 }
